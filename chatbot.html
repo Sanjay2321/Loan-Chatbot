@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Loan Support Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef2f5;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .chat-container {
+      max-width: 600px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+
+    .chat-header {
+      background: #28a745;
+      color: #fff;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .chat-box {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      margin-bottom: 15px;
+    }
+
+    .user {
+      text-align: right;
+      color: #333;
+    }
+
+    .bot {
+      text-align: left;
+      color: #000;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    select, button {
+      padding: 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    select {
+      flex: 1;
+    }
+
+    button {
+      background-color: #28a745;
+      color: white;
+      font-weight: bold;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-header">Loan Support Chatbot</div>
+    <div class="chat-box" id="chatBox">
+      <div class="chat-message bot">Hello! Please choose a query type from the menu below to get assistance.</div>
+    </div>
+    <div class="chat-input">
+      <select id="queryType">
+        <option value="">-- Select a query --</option>
+        <option value="emiDelay">Request for EMI Delay</option>
+        <option value="loanStatus">Loan Status Update</option>
+        <option value="accountBlocked">App/Login Access Issue</option>
+        <option value="repaymentSchedule">Repayment Schedule Request</option>
+        <option value="chargesClarification">Clarification on Charges</option>
+        <option value="otpIssue">OTP Not Received</option>
+      </select>
+      <button onclick="handleQuery()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    function handleQuery() {
+      const type = document.getElementById('queryType').value;
+      const chatBox = document.getElementById('chatBox');
+
+      if (!type) return;
+
+      const userMsg = document.createElement('div');
+      userMsg.className = 'chat-message user';
+      userMsg.textContent = document.getElementById('queryType').options[document.getElementById('queryType').selectedIndex].text;
+      chatBox.appendChild(userMsg);
+
+      let botReply = "";
+
+      switch(type) {
+        case "emiDelay":
+          botReply = `Dear Customer,\n\nThank you for reaching out. We understand your situation regarding EMI payment delay. Please note that you may request an extension of up to 45 days, subject to approval. During this period, applicable overdue charges may continue as per policy.\n\nKindly make the payment within the extended time to avoid credit impact.\n\nRegards,\n[Your Company Name]`;
+          break;
+        case "loanStatus":
+          botReply = `Dear Customer,\n\nWe appreciate your interest. Your loan application is currently under review. You will receive an update via SMS or email once it is processed. If already approved, you may check the disbursal and EMI schedule in your app.\n\nThank you for your patience.\n\nRegards,\n[Your Company Name]`;
+          break;
+        case "accountBlocked":
+          botReply = `Dear Customer,\n\nWe apologize for the inconvenience caused. Your account may have been temporarily blocked due to multiple failed login attempts or policy checks. Kindly wait 24 hours and try again. If the issue persists, contact support for manual verification.\n\nRegards,\n[Your Company Name]`;
+          break;
+        case "repaymentSchedule":
+          botReply = `Dear Customer,\n\nThank you for your request. Your repayment schedule is available in the app under the 'Loan Details' section. If you're unable to access it, please reply with your Loan Account Number so we can share it manually.\n\nRegards,\n[Your Company Name]`;
+          break;
+        case "chargesClarification":
+          botReply = `Dear Customer,\n\nAs per your agreement, charges such as processing fees, service fees, tech charges, and GST are standard and non-waivable. We recommend checking the 'Schedule A' section of your loan agreement for a detailed breakdown.\n\nRegards,\n[Your Company Name]`;
+          break;
+        case "otpIssue":
+          botReply = `Dear Customer,\n\nWe request you to kindly avoid multiple attempts in a short time. Please retry after 10–12 hours. If you still do not receive the OTP, inform us and we’ll share a payment link or assist you directly.\n\nRegards,\n[Your Company Name]`;
+          break;
+        default:
+          botReply = "";
+      }
+
+      const botMsg = document.createElement('div');
+      botMsg.className = 'chat-message bot';
+      botMsg.textContent = botReply;
+      chatBox.appendChild(botMsg);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+  </script>
+</body>
+</html>
+
